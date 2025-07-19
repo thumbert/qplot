@@ -1,0 +1,17 @@
+[
+    {
+        "airport": "LGA",
+        "tMin": 85.2,
+        "tMax": 90.1
+    },
+    {
+        "airport": "BOS",
+        "tMin": 82.2,
+        "tMax": 88.8
+    },
+    {
+        "airport": "BWI",
+        "tMin": 87.1,
+        "tMax": 93.5
+    }
+]
