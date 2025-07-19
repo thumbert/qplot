@@ -41,12 +41,6 @@ Check the help for a full list of options.
 qplot --help
 ```
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
-```
 
 ## Additional information
 
