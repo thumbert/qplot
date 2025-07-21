@@ -21,7 +21,7 @@ cat data.csv | qplot --mode=markers --type=scatter --config='{"height": 800}'
 A typical use would be to export the CSV data from a database and then send it to `qplot`
 ```
 duckdb -csv -c "
-ATTACH '~/Downloads/Archive/DuckDB/isone/dalmp.duckdb' AS prices;
+ATTACH '~/dalmp.duckdb' AS prices;
 SELECT * FROM prices.da_lmp
 PIVOT (
     min(lmp),
