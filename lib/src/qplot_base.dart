@@ -14,7 +14,7 @@ List<Map<String, dynamic>> makeTracesCsv(
     shouldParseNumbers: true,
   );
   var content = inputLines.map((e) => converter.convert(e).first).toList();
-  var names = content[0].cast<String>();
+  var names = content[0].map((e) => e.toString()).toList();
   var x = <String>[];
   var series = List.generate(names.length - 1, (index) => <num>[]);
   for (var i = 1; i < content.length; i++) {

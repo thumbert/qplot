@@ -18,6 +18,22 @@ are variables plotted on the y-axis.
 cat data.csv | qplot --mode=markers --type=scatter --config='{"height": 800}'  
 ```
 
+A typical use would be to export the CSV data from a database and then send it to `qplot`
+```
+duckdb -csv -c "
+ATTACH '~/Downloads/Archive/DuckDB/isone/dalmp.duckdb' AS prices;
+SELECT * FROM prices.da_lmp
+PIVOT (
+    min(lmp),
+    FOR ptid IN (4000, 4001)
+    GROUP BY hour_beginning    
+)
+WHERE hour_beginning >= '2025-07-14'
+AND hour_beginning < '2025-07-15'
+ORDER BY hour_beginning;
+" | qplot
+```
+
 ### JSON input
 
 ```
