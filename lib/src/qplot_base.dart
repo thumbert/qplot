@@ -4,7 +4,7 @@ import 'package:csv/csv.dart';
 
 /// First input line is the column names
 List<Map<String, dynamic>> makeTracesCsv(
-  List<String> inputLines, {
+  Iterable<String> inputLines, {
   required String mode,
   required String type,
 }) {

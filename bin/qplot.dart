@@ -49,7 +49,8 @@ keys.  The first key is the x-axis data, and the remaining keys are variables.
     ..addOption(
       'skip',
       defaultsTo: '0',
-      help: 'Number of lines to skip at the beginning of the input.',
+      help: 'Number of lines to skip at the beginning of the input.  Only applies'
+      'to CSV input.',
     );
 
   var results = parser.parse(args);
@@ -118,7 +119,7 @@ Example usage:
   if (inputDataType == 'json') {
     traces = makeTracesJson(lines.join(), mode: mode, type: type);
   } else if (inputDataType == 'csv') {
-    traces = makeTracesCsv(lines, mode: mode, type: type);
+    traces = makeTracesCsv(lines.skip(results['skip']), mode: mode, type: type);
   }
 
   Plotly.now(traces, config, file: file);
