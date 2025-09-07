@@ -16,12 +16,18 @@ List<Map<String, dynamic>> makeTracesCsv(
   var content = inputLines.map((e) => converter.convert(e).first).toList();
   var names = content[0].map((e) => e.toString()).toList();
   var x = <String>[];
-  var series = List.generate(names.length - 1, (index) => <num>[]);
+  var series = List.generate(names.length - 1, (index) => <num?>[]);
   for (var i = 1; i < content.length; i++) {
     var row = content[i];
     x.add(row[0]);
     for (var j = 1; j < row.length; j++) {
-      series[j - 1].add(row[j]);
+      late num? value;
+      if (row[j] is String) {
+        value = num.tryParse(row[j]);
+      } else {
+        value = row[j];
+      }
+      series[j - 1].add(value);
     }
   }
 
@@ -50,11 +56,17 @@ List<Map<String, dynamic>> makeTracesJson(
   var content = (json.decode(input) as List).cast<Map<String, dynamic>>();
   var names = content[0].keys.toList();
   var x = <String>[];
-  var series = List.generate(names.length - 1, (index) => <num>[]);
+  var series = List.generate(names.length - 1, (index) => <num?>[]);
   for (var row in content) {
     x.add(row[names[0]]);
     for (var j = 1; j < row.length; j++) {
-      series[j - 1].add(row[names[j]]);
+      late num? value;
+      if (row[names[j]] is String) {
+        value = num.tryParse(row[names[j]]);
+      } else {
+        value = row[names[j]];
+      }
+      series[j - 1].add(value);
     }
   }
 

@@ -77,7 +77,7 @@ Example usage:
     exit(0);
   }
   if (results['version']) {
-    print('0.0.1');
+    print('0.1.2');
     exit(0);
   }
   File? file;

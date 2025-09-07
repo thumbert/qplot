@@ -24,6 +24,38 @@ void main() {
         'type': 'scatter',
       });
     });
+    test('qplot make traces with nulls csv', () {
+      final file = File('test/assets/data_with_nulls.csv');
+      final input = file.readAsLinesSync();
+      final traces = makeTracesCsv(input, mode: 'lines', type: 'scatter');
+      expect(traces.length, 7);
+      expect(traces.first, {
+        'x': [
+          '2015-01',
+          '2015-02',
+          '2015-03',
+          '2015-04',
+          '2015-05',
+        ],
+        'y': [35.8, 35.8, 49.3, 37.3, 42.9],
+        'name': 'BIOFUEL',
+        'mode': 'lines',
+        'type': 'scatter',
+      });
+      expect(traces[4], {
+        'x': [
+          '2015-01',
+          '2015-02',
+          '2015-03',
+          '2015-04',
+          '2015-05',
+        ],
+        'y': [null, 42.1, null, null, null],
+        'name': 'OTHER',
+        'mode': 'lines',
+        'type': 'scatter',
+      });
+    });
     test('qplot make traces json', () {
       final file = File('test/assets/data1.json');
       final input = file.readAsStringSync();
