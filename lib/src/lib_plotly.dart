@@ -56,7 +56,6 @@ class Plotly {
     }
     file ??= File(
         '${Directory.systemTemp.path}/plotly_${DateTime.now().millisecondsSinceEpoch}.html');
-    // var divId = basename(file.path).replaceAll(RegExp('\\.html\$'), '');
     var divId = 'plotly-html-element';
     var out = """
 <!DOCTYPE html>
@@ -78,11 +77,11 @@ class Plotly {
     if (openInBrowser) {
       if (Platform.isWindows) {
         // On Windows, we can use the start command to open the file in the default browser.
-        Process.run('start', [file.path]);
+        Process.runSync('start', [file.path], runInShell: true);
       } else if (Platform.isLinux || Platform.isMacOS) {
         // On Linux and macOS, we can use xdg-open or open command respectively.
         var command = Platform.isLinux ? 'xdg-open' : 'open';
-        Process.run(command, [file.path]);
+        Process.runSync(command, [file.path]);
       }
     }
   }

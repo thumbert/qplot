@@ -15,7 +15,7 @@ List<Map<String, dynamic>> makeTracesCsv(
   );
   var content = inputLines.map((e) => converter.convert(e).first).toList();
   var names = content[0].map((e) => e.toString()).toList();
-  var x = <String>[];
+  var x = [];
   var series = List.generate(names.length - 1, (index) => <num?>[]);
   for (var i = 1; i < content.length; i++) {
     var row = content[i];
@@ -55,7 +55,7 @@ List<Map<String, dynamic>> makeTracesJson(
   }
   var content = (json.decode(input) as List).cast<Map<String, dynamic>>();
   var names = content[0].keys.toList();
-  var x = <String>[];
+  var x = [];
   var series = List.generate(names.length - 1, (index) => <num?>[]);
   for (var row in content) {
     x.add(row[names[0]]);

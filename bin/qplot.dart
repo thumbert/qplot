@@ -50,7 +50,7 @@ keys.  The first key is the x-axis data, and the remaining keys are variables.
       'skip',
       defaultsTo: '0',
       help:
-          'Number of lines to skip at the beginning of the input.  Only applies'
+          'Number of lines to skip at the beginning of the input.  Only applies '
           'to CSV input.',
     );
 
