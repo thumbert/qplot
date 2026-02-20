@@ -61,6 +61,6 @@ qplot --help
 ## Additional information
 
 Release a binary: 
-```
+```bash
 dart compile exe bin/qplot.dart -o ~/.local/bin/qplot
 ```
