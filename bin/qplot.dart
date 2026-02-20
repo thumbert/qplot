@@ -52,6 +52,12 @@ keys.  The first key is the x-axis data, and the remaining keys are variables.
       help:
           'Number of lines to skip at the beginning of the input.  Only applies '
           'to CSV input.',
+    )
+    ..addFlag(
+      'header',
+      defaultsTo: true,
+      help:
+          'Whether the input CSV has a header row.  Only applies to CSV input.',
     );
 
   var results = parser.parse(args);
@@ -78,7 +84,7 @@ Example usage:
     exit(0);
   }
   if (results['version']) {
-    print('0.1.2');
+    print('0.1.4 (2026-02-20)');
     exit(0);
   }
   File? file;
@@ -124,6 +130,7 @@ Example usage:
       lines.skip(int.tryParse(results['skip']) ?? 0),
       mode: mode,
       type: type,
+      header: results['header'] as bool,
     );
   }
 

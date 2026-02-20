@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:csv/csv.dart';
 import 'package:path/path.dart';
 
 class Plotly {
@@ -61,7 +60,7 @@ class Plotly {
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.plot.ly/plotly-2.35.3.min.js" charset="utf-8"></script>
+  <script src="https://cdn.plot.ly/plotly-3.3.1.min.js" charset="utf-8"></script>
 </head>
 <body>
   <div id="$divId"></div>
@@ -84,43 +83,5 @@ class Plotly {
         Process.runSync(command, [file.path]);
       }
     }
-  }
-
-  /// Create Plotly traces from a CSV string.
-  /// The CSV should have a header row with the column names, and the first
-  /// column should be a timestamp in ISO 8601 format.  For example:
-  /// "hour_beginning,hq_phase2_import,ny_north_import\n2024-01-01 00:00:00-05:00,2000,1600\n2024-01-01 01:00:00-05:00,2000,1600\n2024-01-01 02:00:00-05:00,2000,1600\n2024-01-01 03:00:00-05:00,2000,1600\n2024-01-01 04:00:00-05:00,2000,1600\n"
-  static List<Map<String, dynamic>> makeTracesFromCsv(String csv,
-      {String? mode, String? type}) {
-    var lines = CsvToListConverter(
-      eol: '\n',
-      fieldDelimiter: ',',
-      shouldParseNumbers: true,
-    ).convert(csv);
-    var names = lines[0].map((e) => e.toString()).toList();
-    var x = <String>[];
-    var series = List.generate(
-      names.length - 1,
-      (index) => <num>[],
-    );
-    for (var i = 1; i < lines.length; i++) {
-      var row = lines[i];
-      x.add(row[0].toString());
-      for (var j = 1; j < row.length; j++) {
-        series[j - 1].add(row[j]);
-      }
-    }
-
-    var traces = <Map<String, dynamic>>[];
-    for (var i = 0; i < series.length; i++) {
-      traces.add({
-        'x': [...x],
-        'y': series[i],
-        'name': names[i + 1],
-        'type': type ?? 'scatter',
-        'mode': mode ?? 'lines',
-      });
-    }
-    return traces;
   }
 }

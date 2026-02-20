@@ -2,22 +2,25 @@ import 'dart:convert';
 
 import 'package:csv/csv.dart';
 
-/// First input line is the column names
+
 List<Map<String, dynamic>> makeTracesCsv(
   Iterable<String> inputLines, {
   required String mode,
   required String type,
+  required bool header,
 }) {
-  final converter = CsvToListConverter(
-    eol: '\n',
-    fieldDelimiter: ',',
-    shouldParseNumbers: true,
-  );
-  var content = inputLines.map((e) => converter.convert(e).first).toList();
-  var names = content[0].map((e) => e.toString()).toList();
+  final content = csv.decode(inputLines.join('\n'));
+  List<String> names = [];
+  if (header) {
+    names = content[0].map((e) => e.toString()).toList();
+  } else {
+    names = List.generate(content[0].length, (index) => 'col${index + 1}');
+  }
+
+  var idxOffset = header ? 1 : 0;
   var x = [];
   var series = List.generate(names.length - 1, (index) => <num?>[]);
-  for (var i = 1; i < content.length; i++) {
+  for (var i = idxOffset; i < content.length; i++) {
     var row = content[i];
     x.add(row[0]);
     for (var j = 1; j < row.length; j++) {

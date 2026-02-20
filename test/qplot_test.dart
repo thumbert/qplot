@@ -8,7 +8,12 @@ void main() {
     test('qplot make traces csv', () {
       final file = File('test/assets/data1.csv');
       final input = file.readAsLinesSync();
-      final traces = makeTracesCsv(input, mode: 'lines', type: 'scatter');
+      final traces = makeTracesCsv(
+        input,
+        mode: 'lines',
+        type: 'scatter',
+        header: true,
+      );
       expect(traces.length, 1);
       expect(traces.first, {
         'x': [
@@ -27,29 +32,22 @@ void main() {
     test('qplot make traces with nulls csv', () {
       final file = File('test/assets/data_with_nulls.csv');
       final input = file.readAsLinesSync();
-      final traces = makeTracesCsv(input, mode: 'lines', type: 'scatter');
+      final traces = makeTracesCsv(
+        input,
+        mode: 'lines',
+        type: 'scatter',
+        header: true,
+      );
       expect(traces.length, 7);
       expect(traces.first, {
-        'x': [
-          '2015-01',
-          '2015-02',
-          '2015-03',
-          '2015-04',
-          '2015-05',
-        ],
+        'x': ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05'],
         'y': [35.8, 35.8, 49.3, 37.3, 42.9],
         'name': 'BIOFUEL',
         'mode': 'lines',
         'type': 'scatter',
       });
       expect(traces[4], {
-        'x': [
-          '2015-01',
-          '2015-02',
-          '2015-03',
-          '2015-04',
-          '2015-05',
-        ],
+        'x': ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05'],
         'y': [null, 42.1, null, null, null],
         'name': 'OTHER',
         'mode': 'lines',
