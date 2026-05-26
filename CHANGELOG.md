@@ -1,4 +1,9 @@
 
+## Version 0.2.0 (2026-05-26)
+- Support --group flag which allows you to specify if observations get 
+  grouped into traces.  It's a convenient feature because the data in 
+  the database is usually stored in a long format.  
+
 ## Version 0.1.4 (2026-02-20)
 - Update Plotly to 3.3.1
 - Upgrade csv package to 7.1.0

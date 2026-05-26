@@ -46,6 +46,14 @@ JSON input should be a JSON array of objects, where each object has the same
 keys.  The first key is the x-axis data, and the remaining keys are variables.
 """,
     )
+    ..addFlag(
+      'group',
+      defaultsTo: false,
+      help:
+          """Group data by the last column.  The data needs to have exactly 3 columns 
+(x, y, group) for CSV input, or 3 keys for JSON input (x, y, group).
+""",
+    )
     ..addOption(
       'skip',
       defaultsTo: '0',
@@ -84,7 +92,7 @@ Example usage:
     exit(0);
   }
   if (results['version']) {
-    print('0.1.4 (2026-02-20)');
+    print('0.2.0 (2026-05-26)');
     exit(0);
   }
   File? file;
@@ -124,14 +132,27 @@ Example usage:
 
   late List<Map<String, dynamic>> traces;
   if (inputDataType == 'json') {
-    traces = makeTracesJson(lines.join(), mode: mode, type: type);
+    if (results['group'] as bool) {
+      traces = makeTracesJsonGrouped(lines.join(), mode: mode, type: type);
+    } else {
+      traces = makeTracesJson(lines.join(), mode: mode, type: type);
+    }
   } else if (inputDataType == 'csv') {
-    traces = makeTracesCsv(
-      lines.skip(int.tryParse(results['skip']) ?? 0),
-      mode: mode,
-      type: type,
-      header: results['header'] as bool,
-    );
+    if (results['group'] as bool) {
+      traces = makeTracesCsvGrouped(
+        lines.skip(int.tryParse(results['skip']) ?? 0),
+        mode: mode,
+        type: type,
+        header: results['header'] as bool,
+      );
+    } else {
+      traces = makeTracesCsv(
+        lines.skip(int.tryParse(results['skip']) ?? 0),
+        mode: mode,
+        type: type,
+        header: results['header'] as bool,
+      );
+    }
   }
 
   Plotly.now(traces, config, file: file);
