@@ -1,4 +1,7 @@
 
+## 2026-05-27
+- Add example .svg file to the README to showcase the --group flag
+
 ## Version 0.2.0 (2026-05-26)
 - Support --group flag which allows you to specify if observations get 
   grouped into traces.  It's a convenient feature because the data in 

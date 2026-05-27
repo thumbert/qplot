@@ -50,12 +50,15 @@ curl 'http://localhost:8111/isone/prices/da/hourly/start/2025-01-01/end/2025-01-
 | qplot
 ```
 
-Multiple series:
+Multiple series with the argument `--group`:
 ```bash
-curl 'http://localhost:8111/isone/prices/da/hourly/start/2025-01-01/end/2025-01-03?ptids=4000,4008&components=lmp' \
+curl 'http://localhost:8111/isone/prices/da/hourly/start/2025-01-23/end/2025-01-31?ptids=4000,4001&components=mcc' \
 | jq "[.[] | {hour_beginning,price,ptid}]" \
 | qplot --group
 ```
+And you get:
+
+![example](./test/assets/example-group.svg)
 
 
 ## Usage
